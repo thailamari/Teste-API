@@ -12,7 +12,7 @@ const transferService = require('../../service/transferService');
 // Testes
 describe('Transfer Controller', () => {
     describe('POST /transfers', () =>{
-        it.only('Quando informo remetente e destinatário inexistente recebo 400', async () =>{
+        it('Quando informo remetente e destinatário inexistente recebo 400', async () =>{
             const resposta = await request(app)
                 .post('/transfer')
                 .send({
