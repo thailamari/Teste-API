@@ -48,7 +48,7 @@ describe('Transfer Controller', () => {
             transferServiceMock.returns({
                 from: "Thaila",
                 to: "Wellinton",
-                amount: 100
+                amount: 101
             })
 
             const resposta = await request(app)
