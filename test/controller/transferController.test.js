@@ -11,10 +11,28 @@ const transferService = require('../../service/transferService');
 
 // Testes
 describe('Transfer Controller', () => {
-    describe('POST /transfers', () =>{
+        describe('POST /transfers', () =>{   
+            
+            let token = null;
+
+            beforeEach(async() =>{
+            // Capturar o token
+            const respostaLogin = await request('http://localhost:3000')
+            .post('/login')
+            .send({
+                username: 'Thaila',
+                password: '123456'
+                
+            });
+
+            token = respostaLogin.body.token;
+        })
+
         it('Quando informo remetente e destinatário inexistente recebo 400', async () =>{
+           
             const resposta = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${token}`)
                 .send({
                     from: "Thaila",
                     to: "Wellinton",
@@ -24,12 +42,13 @@ describe('Transfer Controller', () => {
         });
 
          it('Usando Mocks: Quando informo remetente e destinatário inexistente recebo 400', async () =>{
-            // Mocar apenas a função do Service
+            // Mocar apenas a função transfer do Service
             const transferServiceMock = sinon.stub(transferService, 'transfer')
             transferServiceMock.throws(new Error('Usuário não encontrado'))
 
             const resposta = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${token}`)
                 .send({
                     from: "Thaila",
                     to: "Wellinton",
@@ -42,17 +61,18 @@ describe('Transfer Controller', () => {
             sinon.restore();
         });
 
-         it.only('Usando Mocks: Quando informo válidos eu tenho sucesso com 201 CREATED', async () =>{
+         it('Usando Mocks: Quando informo válidos eu tenho sucesso com 201 CREATED', async () =>{
             // Mocar apenas a função do Service
             const transferServiceMock = sinon.stub(transferService, 'transfer')
             transferServiceMock.returns({
                 from: "Thaila",
                 to: "Wellinton",
-                amount: 101
+                amount: 100
             })
 
             const resposta = await request(app)
                 .post('/transfer')
+                .set('Authorization', `Bearer ${token}`)
                 .send({
                     from: "Thaila",
                     to: "Wellinton",
@@ -63,8 +83,8 @@ describe('Transfer Controller', () => {
 
             // Validação 
             const respostaEsperada = require('../fixture/respostas/QuandoInformoValidosEuTenhoSucessoCom201Created.json')
-            delete resposta.body.date;
-            delete respostaEsperada.date;
+            //delete resposta.body.date;
+            //delete respostaEsperada.date;
             expect(resposta.body).to.deep.equal(respostaEsperada);
 
             console.log(respostaEsperada)

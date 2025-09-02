@@ -6,7 +6,8 @@
     "start": "node server.js",
     "test": "mocha test/**/*.test.js --timeout 10000",
     "test-external": "mocha test/external/**/*.test.js --timeout 10000",
-    "test-controller": "mocha test/controller/**/*.test.js --timeout 10000"
+    "test-controller": "mocha test/controller/**/*.test.js --timeout 10000",
+    "test-user": "mocha test/User/**/*.test.js --timeout 10000"
   },
   "dependencies": {
     "chai": "^4.5.0",
