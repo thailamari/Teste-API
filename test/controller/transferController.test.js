@@ -89,9 +89,9 @@ describe('Transfer Controller', () => {
 
             console.log(respostaEsperada)
 
-            //expect(resposta.body).to.have.property('from', 'Thaila');
-            //expect(resposta.body).to.have.property('to', 'Wellinton');
-            //expect(resposta.body).to.have.property('amount', 100);
+            expect(resposta.body).to.have.property('from', 'Thaila');
+            expect(resposta.body).to.have.property('to', 'Wellinton');
+            expect(resposta.body).to.have.property('amount', 100);
             
             //Reseto o Mock
             sinon.restore();

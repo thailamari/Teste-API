@@ -5,7 +5,7 @@ const { expect } = require('chai');
 
 // Testes
 describe('Transfer Controller', () => {
-        describe('POST /transfers', () =>{   
+        describe('POST /register', () =>{   
             
             let token = null;
 
